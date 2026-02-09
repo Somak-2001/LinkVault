@@ -6,6 +6,8 @@ export default function UploadForm() {
   const [file, setFile] = useState(null);
   const [expiry, setExpiry] = useState("");
   const [link, setLink] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +23,8 @@ export default function UploadForm() {
     }
 
     try {
+      setLoading(true);
+
       const formData = new FormData();
       if (text) formData.append("text", text);
       if (file) formData.append("file", file);
@@ -31,11 +35,27 @@ export default function UploadForm() {
       });
 
       setLink(res.data.url);
+      setCopied(false);
+
+      // Reset form
+      setText("");
+      setFile(null);
+      setExpiry("");
+
     } catch (err) {
       console.error(err);
       alert("Upload failed");
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Helper text logic
+  let helperText = "You can upload either text or a file, not both.";
+  if (text.length > 0) helperText = "Clear the text to upload a file instead.";
+  if (file) helperText = "Remove the file to paste text instead.";
+
+  const fileDisabled = loading || text.length > 0;
 
   return (
     <div className="w-full max-w-md">
@@ -47,47 +67,118 @@ export default function UploadForm() {
           Upload Content
         </h2>
 
+        {/* TEXT INPUT */}
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Paste text here..."
           rows={5}
-          className="w-full border rounded p-2 mb-3"
+          disabled={loading || file !== null}
+          className={`w-full border rounded p-2 mb-2 ${
+            file ? "bg-gray-100 cursor-not-allowed" : ""
+          }`}
         />
 
-        <div className="text-center text-gray-500 my-2">OR</div>
+        <p className="text-sm text-gray-500 mb-3">
+          {helperText}
+        </p>
 
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="w-full mb-3"
-        />
+        <div className="text-center text-gray-400 my-2">OR</div>
 
+        {/* FILE UPLOAD FIELD */}
+        <div
+          className={`border rounded-md px-3 py-2 flex items-center justify-between mb-3 ${
+            fileDisabled
+              ? "bg-gray-100 border-gray-200"
+              : "border-gray-300"
+          }`}
+        >
+          <span className="text-sm text-gray-600 truncate">
+            {file ? file.name : "No file selected"}
+          </span>
+
+          <div className="flex items-center gap-3">
+            {file && !loading && (
+              <button
+                type="button"
+                onClick={() => setFile(null)}
+                className="text-sm text-red-600 hover:underline"
+              >
+                Remove
+              </button>
+            )}
+
+            <input
+              id="file-input"
+              type="file"
+              className="hidden"
+              disabled={fileDisabled}
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+
+            <label
+              htmlFor="file-input"
+              className={`px-3 py-1 text-sm rounded cursor-pointer ${
+                fileDisabled
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+            >
+              Choose File
+            </label>
+          </div>
+        </div>
+
+        {/* EXPIRY FIELD */}
         <input
           type="datetime-local"
           value={expiry}
           onChange={(e) => setExpiry(e.target.value)}
-          className="w-full border rounded p-2 mb-4"
+          disabled={loading}
+          className="w-full border rounded p-2 mb-2"
         />
 
+        <p className="text-sm text-gray-500 mb-4">
+          Optional. If not selected, content expires 10 minutes after upload.
+        </p>
+
+        {/* SUBMIT */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          disabled={loading}
+          className={`w-full py-2 rounded text-white ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Upload
+          {loading ? "Uploading..." : "Upload"}
         </button>
       </form>
 
+      {/* SUCCESS CARD */}
       {link && (
-        <div className="bg-green-50 border border-green-300 p-3 rounded">
-          <p className="text-sm mb-1">Shareable Link:</p>
-          <a
-            href={link}
-            className="text-blue-600 break-all underline"
-            target="_blank"
-          >
+        <div className="mt-4 border border-green-300 bg-green-50 p-4 rounded-lg">
+          <div className="flex items-center mb-2">
+            <span className="text-green-600 text-lg mr-2">✔</span>
+            <h3 className="text-green-700 font-semibold">
+              Upload successful
+            </h3>
+          </div>
+
+          <div className="bg-white border rounded p-2 text-sm break-all mb-3">
             {link}
-          </a>
+          </div>
+
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(link);
+              setCopied(true);
+            }}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          >
+            {copied ? "Copied!" : "Copy link"}
+          </button>
         </div>
       )}
     </div>
