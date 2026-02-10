@@ -7,12 +7,13 @@ export const getContent = async (req, res) => {
 
     const content = await Content.findById(id);
 
-    // Invalid or expired (TTL already deleted expired docs)
     if (!content) {
-      return res.status(403).json({ message: "Invalid or expired link" });
+      return res.status(403).json({
+        message: "Invalid or expired link",
+      });
     }
 
-    // Text content
+    // TEXT CONTENT
     if (content.type === "text") {
       return res.json({
         type: "text",
@@ -20,11 +21,16 @@ export const getContent = async (req, res) => {
       });
     }
 
-    // File content
-    const filePath = path.resolve("uploads", content.fileName);
-    return res.download(filePath);
+    // FILE CONTENT (NO AUTO DOWNLOAD)
+    return res.json({
+      type: "file",
+      fileName: content.fileName,
+      downloadUrl: `/api/content/${id}/download`,
+    });
+
   } catch (err) {
-    console.error(err);
-    return res.status(403).json({ message: "Invalid or expired link" });
+    return res.status(403).json({
+      message: "Invalid or expired link",
+    });
   }
 };
