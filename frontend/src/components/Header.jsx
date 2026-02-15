@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import "../styles/Header.css";
@@ -7,6 +7,7 @@ export default function Header() {
     const { user, isAuthenticated, logout } = useAuth();
     const { showSuccess } = useToast();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
@@ -44,10 +45,16 @@ export default function Header() {
                         </>
                     ) : (
                         <>
-                            <Link to="/login" className="nav-link">
+                            <Link
+                                to={`/login${location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' ? `?redirect=${encodeURIComponent(location.pathname)}` : ''}`}
+                                className="nav-link"
+                            >
                                 Login
                             </Link>
-                            <Link to="/register" className="nav-btn">
+                            <Link
+                                to={`/register${location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/' ? `?redirect=${encodeURIComponent(location.pathname)}` : ''}`}
+                                className="nav-btn"
+                            >
                                 Sign Up
                             </Link>
                         </>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import "../styles/Auth.css";
@@ -11,8 +11,12 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { register } = useAuth();
     const { showSuccess, showError } = useToast();
+
+    // Get redirect URL from query params, default to dashboard
+    const redirectUrl = searchParams.get("redirect") || "/dashboard";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,7 +40,8 @@ export default function Register() {
         try {
             await register(name, email, password);
             showSuccess("Registration successful!");
-            navigate("/dashboard");
+            // Redirect to the intended destination
+            navigate(redirectUrl);
         } catch (error) {
             showError(error.response?.data?.message || "Registration failed");
         } finally {

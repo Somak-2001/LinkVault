@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import "../styles/Auth.css";
@@ -9,8 +9,12 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { login } = useAuth();
     const { showSuccess, showError } = useToast();
+
+    // Get redirect URL from query params, default to dashboard
+    const redirectUrl = searchParams.get("redirect") || "/dashboard";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +28,8 @@ export default function Login() {
         try {
             await login(email, password);
             showSuccess("Login successful!");
-            navigate("/dashboard");
+            // Redirect to the intended destination
+            navigate(redirectUrl);
         } catch (error) {
             showError(error.response?.data?.message || "Login failed");
         } finally {
