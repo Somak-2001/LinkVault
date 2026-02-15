@@ -1,4 +1,0 @@
-Hello World
-This is a collaborative editor
-Welcome to SyncText
-Edit this document and see real-time updates

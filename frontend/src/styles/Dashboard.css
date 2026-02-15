@@ -1,0 +1,223 @@
+/* Dashboard Styles */
+.dashboard-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 20px;
+}
+
+.dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-loading {
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 60px 20px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-title {
+    color: white;
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+}
+
+.user-name {
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboard-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    margin: 0;
+}
+
+.dashboard-actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.dashboard-btn-primary {
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    color: white;
+}
+
+.dashboard-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(167, 139, 250, 0.4);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.empty-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+}
+
+.empty-state h2 {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+}
+
+.empty-state p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    margin: 0 0 32px 0;
+}
+
+.empty-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.empty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(167, 139, 250, 0.4);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.content-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.content-type-badge {
+    background: rgba(167, 139, 250, 0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.content-date {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+}
+
+.card-body {
+    margin-bottom: 16px;
+    min-height: 80px;
+}
+
+.content-preview {
+    color: white;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 12px 0;
+    word-break: break-word;
+}
+
+.password-badge,
+.views-badge {
+    display: inline-block;
+    background: rgba(236, 72, 153, 0.3);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.card-footer {
+    display: flex;
+    gap: 8px;
+}
+
+.card-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card-btn-view {
+    background: rgba(167, 139, 250, 0.3);
+    color: white;
+}
+
+.card-btn-view:hover {
+    background: rgba(167, 139, 250, 0.5);
+}
+
+.card-btn-delete {
+    background: rgba(239, 68, 68, 0.3);
+    color: white;
+}
+
+.card-btn-delete:hover {
+    background: rgba(239, 68, 68, 0.5);
+}
+
+.expiry-indicator {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    text-align: center;
+}

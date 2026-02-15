@@ -1,69 +1,690 @@
 @import "tailwindcss";
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* ============================================
+   LINKVAULT DESIGN SYSTEM - SECURE VAULT THEME
+   ============================================ */
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* Vault Color Palette - Indigo/Purple */
+  --vault-indigo-950: #1e1b4b;
+  --vault-indigo-900: #312e81;
+  --vault-indigo-800: #3730a3;
+  --vault-indigo-700: #4c1d95;
+  --vault-purple-700: #6b21a8;
+  --vault-purple-600: #7c3aed;
+  --vault-purple-500: #8b5cf6;
+  --vault-purple-400: #a78bfa;
+  --vault-purple-300: #c4b5fd;
+
+  /* Success & Feedback */
+  --vault-success: #10b981;
+  --vault-success-light: #34d399;
+  --vault-error: #ef4444;
+  --vault-warning: #f59e0b;
+
+  /* Backgrounds */
+  --vault-bg-dark: #0f172a;
+  --vault-bg-darker: #020617;
+
+  /* Glass Effect */
+  --vault-glass-bg: rgba(255, 255, 255, 0.1);
+  --vault-glass-border: rgba(255, 255, 255, 0.2);
+  --vault-glass-hover: rgba(255, 255, 255, 0.15);
+
+  /* Shadows & Glows */
+  --vault-glow-purple: 0 0 40px rgba(139, 92, 246, 0.3);
+  --vault-glow-indigo: 0 0 40px rgba(99, 102, 241, 0.3);
+  --vault-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+  /* Transitions */
+  --vault-transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --vault-transition-fast: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--vault-bg-dark);
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   GLASSMORPHIC COMPONENTS
+   ============================================ */
+
+.glass-card {
+  background: var(--vault-glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: 16px;
+  box-shadow: var(--vault-shadow-lg);
+  transition: var(--vault-transition);
+}
+
+.glass-card:hover {
+  background: var(--vault-glass-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--vault-shadow-lg), var(--vault-glow-purple);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: white;
+  font-size: 16px;
+  transition: var(--vault-transition);
+  width: 100%;
+}
+
+.glass-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--vault-purple-400);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   GRADIENT BACKGROUNDS
+   ============================================ */
+
+.vault-gradient-bg {
+  background: linear-gradient(135deg,
+      var(--vault-indigo-900) 0%,
+      var(--vault-purple-700) 50%,
+      var(--vault-bg-dark) 100%);
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.vault-gradient-card {
+  background: linear-gradient(135deg,
+      rgba(124, 58, 237, 0.1) 0%,
+      rgba(99, 102, 241, 0.05) 100%);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.vault-btn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: var(--vault-transition);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.vault-btn-primary {
+  background: linear-gradient(135deg, var(--vault-purple-600), var(--vault-purple-500));
+  color: white;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.vault-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.vault-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.vault-btn-secondary {
+  background: var(--vault-glass-bg);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid var(--vault-glass-border);
+}
+
+.vault-btn-secondary:hover:not(:disabled) {
+  background: var(--vault-glass-hover);
+  border-color: var(--vault-purple-400);
+}
+
+.vault-btn-success {
+  background: linear-gradient(135deg, var(--vault-success), var(--vault-success-light));
+  color: white;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.vault-btn-success:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.vault-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ============================================
+   TABS
+   ============================================ */
+
+.vault-tabs {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.vault-tab {
+  flex: 1;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--vault-transition);
+  font-size: 16px;
+}
+
+.vault-tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vault-tab.active {
+  background: linear-gradient(135deg, var(--vault-purple-600), var(--vault-purple-500));
+  color: white;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+/* ============================================
+   DRAG & DROP ZONE
+   ============================================ */
+
+.vault-dropzone {
+  border: 2px dashed var(--vault-glass-border);
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+  transition: var(--vault-transition);
+  cursor: pointer;
+}
+
+.vault-dropzone:hover {
+  border-color: var(--vault-purple-400);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.vault-dropzone.dragging {
+  border-color: var(--vault-purple-500);
+  background: rgba(139, 92, 246, 0.1);
+  box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+.vault-dropzone-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+/* ============================================
+   FILE PREVIEW
+   ============================================ */
+
+.vault-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: 12px;
+  margin-top: 16px;
+}
+
+.vault-file-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--vault-purple-600), var(--vault-purple-500));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.vault-file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.vault-file-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vault-file-size {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.vault-file-remove {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--vault-error);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--vault-transition);
+  padding: 0;
+}
+
+.vault-file-remove:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--vault-error);
+}
+
+/* ============================================
+   SUCCESS CARD
+   ============================================ */
+
+.vault-success-card {
+  text-align: center;
+  padding: 32px;
+}
+
+.vault-success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--vault-success), var(--vault-success-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+  animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
   }
-  a:hover {
-    color: #747bff;
+
+  50% {
+    transform: scale(1.1);
   }
-  button {
-    background-color: #f9f9f9;
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-} */
+}
+
+.vault-link-display {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  align-items: stretch;
+}
+
+.vault-link-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--vault-glass-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+/* ============================================
+   COLLAPSIBLE ADVANCED SETTINGS
+   ============================================ */
+
+.vault-advanced {
+  margin-top: 24px;
+}
+
+.vault-advanced summary {
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  font-weight: 500;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--vault-transition);
+  user-select: none;
+}
+
+.vault-advanced summary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vault-advanced summary::-webkit-details-marker {
+  display: none;
+}
+
+.vault-advanced[open] summary {
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--vault-glass-border);
+  border-radius: 10px 10px 0 0;
+}
+
+.vault-advanced-content {
+  padding: 16px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.vault-progress {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.vault-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.vault-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--vault-purple-600), var(--vault-purple-400));
+  animation: progressAnimation 1.5s ease-in-out infinite;
+  border-radius: 3px;
+}
+
+@keyframes progressAnimation {
+  0% {
+    width: 0%;
+  }
+
+  50% {
+    width: 70%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   LOCK/UNLOCK ANIMATIONS
+   ============================================ */
+
+.vault-lock-icon {
+  font-size: 48px;
+  animation: lockPulse 2s ease-in-out infinite;
+}
+
+@keyframes lockPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.vault-hero {
+  text-align: center;
+  padding: 60px 24px 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.vault-hero h1 {
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, white, var(--vault-purple-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.vault-hero p {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.vault-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+}
+
+.vault-form-group {
+  margin-bottom: 20px;
+}
+
+.vault-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .vault-hero h1 {
+    font-size: 72px;
+  }
+
+  .vault-hero p {
+    font-size: 22px;
+  }
+
+  .vault-container {
+    max-width: 1200px;
+  }
+}
+
+/* Desktop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .vault-hero h1 {
+    font-size: 64px;
+  }
+
+  .vault-hero p {
+    font-size: 20px;
+  }
+
+  .vault-container {
+    max-width: 900px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .vault-hero {
+    padding: 50px 24px 32px;
+  }
+
+  .vault-hero h1 {
+    font-size: 48px;
+  }
+
+  .vault-hero p {
+    font-size: 18px;
+  }
+
+  .vault-container {
+    max-width: 600px;
+  }
+}
+
+/* Mobile (below 768px) */
+@media (max-width: 767px) {
+  .vault-hero {
+    padding: 40px 16px 24px;
+  }
+
+  .vault-hero h1 {
+    font-size: 36px;
+  }
+
+  .vault-hero p {
+    font-size: 16px;
+  }
+
+  .vault-container {
+    max-width: 100%;
+    padding: 16px;
+  }
+
+  .vault-link-display {
+    flex-direction: column;
+  }
+
+  .glass-card {
+    padding: 24px !important;
+  }
+
+  .vault-tabs {
+    gap: 4px;
+    padding: 4px;
+  }
+
+  .vault-tab {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Small Mobile (below 480px) */
+@media (max-width: 480px) {
+  .vault-hero h1 {
+    font-size: 28px;
+  }
+
+  .vault-hero p {
+    font-size: 14px;
+  }
+
+  .vault-dropzone {
+    padding: 32px 16px;
+  }
+
+  .vault-dropzone-icon {
+    font-size: 36px;
+  }
+
+  .vault-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   PASSWORD VISIBILITY TOGGLE
+   ============================================ */
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  transition: var(--vault-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.password-toggle-btn:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.password-toggle-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}

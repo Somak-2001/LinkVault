@@ -1,19 +1,12 @@
 import express from "express";
-import multer from "multer";
-import path from "path";
+import upload from "../utils/multer.js";
 import { uploadHandler } from "../controllers/upload.controller.js";
+import { optionalAuth } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
-
-router.post("/upload", upload.single("file"), uploadHandler);
+// Use memory-based Multer (required for Cloudinary)
+// optionalAuth allows both authenticated and guest uploads
+router.post("/upload", optionalAuth, upload.single("file"), uploadHandler);
 
 export default router;
